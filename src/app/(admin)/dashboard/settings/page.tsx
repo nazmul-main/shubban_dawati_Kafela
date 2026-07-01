@@ -3,7 +3,7 @@ import prisma from '@/lib/db';
 import styles from '../Dashboard.module.css';
 
 export default async function AdminSettingsPage() {
-  let settings = await prisma.setting.findFirst();
+  const settings = await prisma.setting.findFirst();
 
   return (
     <div className={styles.wrapper}>
