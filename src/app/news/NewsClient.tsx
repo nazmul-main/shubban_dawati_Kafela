@@ -1,12 +1,22 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
 import React, { useState } from 'react'
 import { useLanguage } from '@/components/context/LanguageContext'
-import { Search, Calendar, Tag, AlertTriangle } from 'lucide-react'
+import { Search, Calendar, Tag } from 'lucide-react'
 import styles from './News.module.css'
 
-export default function NewsClient({ posts }: { posts: any[] }) {
+interface PostItem {
+  id: string;
+  titleBn: string;
+  titleEn: string;
+  contentBn: string;
+  contentEn: string;
+  createdAt: Date;
+  category?: { nameEn: string };
+}
+
+export default function NewsClient({ posts }: { posts: PostItem[] }) {
   const { t } = useLanguage()
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState<'all' | 'news' | 'notice'>('all')

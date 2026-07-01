@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
 import React from 'react'
@@ -6,7 +6,17 @@ import { useLanguage } from '@/components/context/LanguageContext'
 import { Calendar, MapPin, Clock, ArrowRight } from 'lucide-react'
 import styles from './Events.module.css'
 
-export default function EventsClient({ events }: { events: any[] }) {
+interface EventItem {
+  id: string;
+  titleBn: string;
+  titleEn: string;
+  descriptionBn: string;
+  descriptionEn: string;
+  eventDate: Date;
+  location: string;
+}
+
+export default function EventsClient({ events }: { events: EventItem[] }) {
   const { t } = useLanguage()
 
   return (

@@ -25,7 +25,7 @@ export const authConfig = {
       // Add user details to JWT token on sign in
       if (user) {
         token.id = user.id;
-        token.role = (user as any).roleId; // We will attach role during authorize
+        token.role = (user as { roleId?: string }).roleId; // We will attach role during authorize
       }
       return token;
     },
@@ -33,7 +33,7 @@ export const authConfig = {
       // Expose user details in the session
       if (token && session.user) {
         session.user.id = token.id as string;
-        (session.user as any).roleId = token.role;
+        (session.user as { roleId?: unknown }).roleId = token.role;
       }
       return session;
     },
