@@ -1,0 +1,138 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.banner {
+  padding-top: 60px;
+  padding-bottom: 60px;
+  background-color: var(--primary-light);
+  border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .banner {
+  background-color: hsl(145, 30%, 4%);
+}
+
+.bannerSubtitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.missionVisionGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+@media (max-width: 768px) {
+  .missionVisionGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1rem;
+}
+
+.icon {
+  color: var(--primary);
+  width: 28px;
+  height: 28px;
+}
+
+[data-theme="dark"] .icon {
+  color: var(--accent);
+}
+
+.historySection {
+  background-color: var(--bg-card);
+}
+
+.historyGrid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 50px;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .historyGrid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+.historyVisual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.landmarkIcon {
+  color: var(--primary);
+  opacity: 0.15;
+}
+
+[data-theme="dark"] .landmarkIcon {
+  color: var(--accent);
+  opacity: 0.1;
+}
+
+.historyContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.historyText {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+}
+
+.objectivesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.objCard {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.checkIcon {
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.teamSection {
+  background-color: var(--bg-card);
+}
+
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+}
+
+.avatarPlaceholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: var(--primary-light);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-size: 2rem;
+  font-weight: 700;
+  border: 2px solid var(--accent);
+}

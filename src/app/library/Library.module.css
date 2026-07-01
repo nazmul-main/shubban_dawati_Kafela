@@ -1,0 +1,137 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.banner {
+  padding-top: 60px;
+  padding-bottom: 60px;
+  background-color: var(--primary-light);
+  border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .banner {
+  background-color: hsl(145, 30%, 4%);
+}
+
+.bannerSubtitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.controls {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 40px;
+}
+
+.searchWrapper {
+  position: relative;
+  max-width: 360px;
+  width: 100%;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 10px 14px 10px 42px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border-color);
+  background-color: var(--bg-card);
+  color: var(--text-dark);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.searchInput:focus {
+  border-color: var(--primary);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 30px;
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bookCard {
+  display: flex;
+  gap: 20px;
+  align-items: stretch;
+}
+
+@media (max-width: 480px) {
+  .bookCard {
+    flex-direction: column;
+  }
+}
+
+.bookCover {
+  width: 110px;
+  background-color: var(--primary-light);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+  min-height: 150px;
+  box-shadow: var(--shadow-sm);
+}
+
+.coverIcon {
+  color: var(--primary);
+  opacity: 0.35;
+  margin-bottom: 8px;
+}
+
+.coverText {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.bookDetails {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.authorRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.icon {
+  color: var(--accent);
+}
+
+.downloadStats {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: auto;
+}

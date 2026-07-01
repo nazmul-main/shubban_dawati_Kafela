@@ -1,0 +1,207 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color var(--transition-normal), border-color var(--transition-normal);
+}
+
+[data-theme="dark"] .header {
+  background-color: rgba(10, 15, 11, 0.85);
+}
+
+.container {
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logoIcon {
+  width: 36px;
+  height: 36px;
+  background-color: var(--primary);
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  position: relative;
+  transform: rotate(45deg); /* Islamic geometric diamond shape */
+  transition: transform var(--transition-normal);
+}
+
+.logo:hover .logoIcon {
+  transform: rotate(135deg);
+}
+
+.logoIcon::before {
+  content: "☪";
+  color: var(--accent);
+  font-size: 16px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg); /* counter rotate text to keep it straight */
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+}
+
+.logoMain {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--primary);
+  letter-spacing: -0.01em;
+}
+
+[data-theme="dark"] .logoMain {
+  color: var(--text-dark);
+}
+
+.desktopNav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+@media (max-width: 991px) {
+  .desktopNav {
+    display: none;
+  }
+}
+
+.navLink {
+  padding: 8px 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.navLink:hover {
+  color: var(--primary);
+  background-color: var(--primary-light);
+}
+
+.active {
+  color: var(--primary);
+  background-color: var(--primary-light);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.iconBtn {
+  background: none;
+  border: none;
+  color: var(--text-dark);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-fast);
+}
+
+.iconBtn:hover {
+  background-color: var(--primary-light);
+}
+
+.langBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--primary);
+  color: var(--text-light);
+  border: none;
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.langBtn:hover {
+  background-color: var(--primary-hover);
+  box-shadow: 0 4px 10px rgba(13, 77, 44, 0.15);
+}
+
+.menuBtn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-dark);
+  cursor: pointer;
+  padding: 6px;
+}
+
+@media (max-width: 991px) {
+  .menuBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.mobileDrawer {
+  position: absolute;
+  top: 72px;
+  left: 0;
+  right: 0;
+  background-color: var(--bg-card);
+  border-bottom: 1px solid var(--border-color);
+  padding: 16px 20px;
+  box-shadow: var(--shadow-md);
+  animation: slideDown 0.25s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobileNavLink {
+  padding: 12px 16px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  color: var(--text-dark);
+  transition: all var(--transition-fast);
+}
+
+.mobileNavLink:hover {
+  background-color: var(--primary-light);
+  color: var(--primary);
+}
+
+.mobileActive {
+  background-color: var(--primary-light);
+  color: var(--primary);
+}

@@ -1,0 +1,150 @@
+'use client'
+
+import React from 'react'
+import { useLanguage } from '@/components/context/LanguageContext'
+import { CheckCircle, ShieldAlert, Award, Landmark } from 'lucide-react'
+import styles from './About.module.css'
+
+export default function AboutPage() {
+  const { t } = useLanguage()
+
+  const objectives = [
+    {
+      titleBn: 'চরিত্র গঠন',
+      titleEn: 'Character Building',
+      descBn: 'তরুণদেরকে সঠিক নৈতিক শিক্ষা দিয়ে উত্তম চরিত্রের অধিকারী হিসেবে গড়ে তোলা।',
+      descEn: 'Building youths with high moral standards and authentic Islamic character.',
+    },
+    {
+      titleBn: 'দাওয়াতি কাজ',
+      titleEn: 'Islamic Dawah',
+      descBn: 'আধুনিক মাধ্যমে সর্বস্তরের মানুষের মাঝে ইসলামের সৌন্দর্য তুলে ধরা।',
+      descEn: 'Presenting the beauty and wisdom of Islam to everyone using modern media.',
+    },
+    {
+      titleBn: 'সমাজসেবা',
+      titleEn: 'Social Welfare',
+      descBn: 'দারিদ্র্য বিমোচন ও দুর্যোগকালীন সময়ে ত্রাণ ও পুনর্বাসন কাজ করা।',
+      descEn: 'Running charity, relief, and rehabilitation projects for the needy.',
+    },
+  ]
+
+  const team = [
+    { name: 'আবু বকর সিদ্দীক (Abu Bakr)', roleBn: 'সভাপতি', roleEn: 'President' },
+    { name: 'উমর ফারূক (Umar Farooq)', roleBn: 'সাধারণ সম্পাদক', roleEn: 'General Secretary' },
+    { name: 'উসমান ইবনে আফফান (Uthman)', roleBn: 'কোষাধ্যক্ষ', roleEn: 'Treasurer' },
+  ]
+
+  return (
+    <div className={styles.wrapper}>
+      {/* Banner */}
+      <section className={`${styles.banner} islamic-pattern`}>
+        <div className="container text-center">
+          <h1 className="heading-lg" style={{ color: 'var(--primary)', marginBottom: '0.5rem' }}>
+            {t('nav.about')}
+          </h1>
+          <p className={styles.bannerSubtitle}>
+            {t('site.title')}
+          </p>
+        </div>
+      </section>
+
+      {/* Mission & Vision */}
+      <section className="section">
+        <div className="container">
+          <div className={styles.missionVisionGrid}>
+            <div className="card card-hover">
+              <div className={styles.cardHeader}>
+                <Award className={styles.icon} />
+                <h2 className="heading-sm" style={{ margin: 0 }}>{t('about.mission')}</h2>
+              </div>
+              <p style={{ color: 'var(--text-muted)' }}>
+                {t('nav.home') === 'হোম' 
+                  ? 'যুবসমাজকে ভ্রান্ত আদর্শের হাত থেকে রক্ষা করে আল-কোরআন ও সুন্নাহর ভিত্তিতে জীবন গঠনে উদ্বুদ্ধ করা এবং সমাজের সকল স্তরে ইসলামের দাওয়াত পৌঁছে দেয়া।' 
+                  : 'To protect the youth from misguidance, encourage them to build their lives based on the Quran and Sunnah, and convey the message of Islam to all layers of society.'}
+              </p>
+            </div>
+            <div className="card card-hover">
+              <div className={styles.cardHeader}>
+                <ShieldAlert className={styles.icon} />
+                <h2 className="heading-sm" style={{ margin: 0 }}>{t('about.vision')}</h2>
+              </div>
+              <p style={{ color: 'var(--text-muted)' }}>
+                {t('nav.home') === 'হোম' 
+                  ? 'একটি ইনসাফপূর্ণ, সুশৃঙ্খল ও নৈতিকভাবে উন্নত আদর্শ সমাজ গঠন যেখানে যুবসমাজ সর্বাগ্রে নেতৃত্ব প্রদান করবে।' 
+                  : 'To establish a just, orderly, and morally upright model society where the youth take the leading roles.'}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* History & Landmark */}
+      <section className={`${styles.historySection} section`}>
+        <div className="container">
+          <div className={styles.historyGrid}>
+            <div className={styles.historyVisual}>
+              <Landmark size={120} className={styles.landmarkIcon} />
+            </div>
+            <div className={styles.historyContent}>
+              <h2 className="heading-md" style={{ color: 'var(--primary)' }}>
+                {t('nav.home') === 'হোম' ? 'আমাদের ইতিহাস' : 'Our History'}
+              </h2>
+              <p className={styles.historyText}>
+                {t('nav.home') === 'হোম' 
+                  ? 'শুব্বান দাওয়াতি কাফেলা ২০১৬ সালে কিছু উদ্যমী ও দ্বীনদার তরুণের সমন্বয়ে প্রতিষ্ঠিত হয়। সূচনালগ্ন থেকেই এটি তরুণদের চারিত্রিক সংশোধন ও সামাজিক কল্যাণে নানামুখী কাজ পরিচালনা করে আসছে।' 
+                  : 'Shubban Dawah Caravan was established in 2016 by a group of energetic and pious youths. Since its inception, it has been executing various activities for character reformation and social welfare.'}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Objectives */}
+      <section className="section">
+        <div className="container">
+          <h2 className="heading-lg text-center" style={{ marginBottom: '3rem' }}>
+            {t('nav.home') === 'হোম' ? 'আমাদের লক্ষ্য ও উদ্দেশ্যসমূহ' : 'Our Objectives'}
+          </h2>
+          <div className={styles.objectivesGrid}>
+            {objectives.map((obj, idx) => (
+              <div key={idx} className={`${styles.objCard} card`}>
+                <CheckCircle className={styles.checkIcon} />
+                <div>
+                  <h3 className="heading-sm" style={{ margin: '0 0 0.5rem' }}>
+                    {t('nav.home') === 'হোম' ? obj.titleBn : obj.titleEn}
+                  </h3>
+                  <p style={{ color: 'var(--text-muted)' }}>
+                    {t('nav.home') === 'হোম' ? obj.descBn : obj.descEn}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Team Section */}
+      <section className={`${styles.teamSection} section`}>
+        <div className="container">
+          <h2 className="heading-lg text-center" style={{ marginBottom: '3rem' }}>
+            {t('nav.home') === 'হোম' ? 'পরিচালনা পর্ষদ' : 'Executive Board'}
+          </h2>
+          <div className={styles.teamGrid}>
+            {team.map((member, idx) => (
+              <div key={idx} className="card card-hover text-center">
+                <div className={styles.avatarPlaceholder}>
+                  <span>{member.name.charAt(0)}</span>
+                </div>
+                <h3 className="heading-sm" style={{ margin: '1rem 0 0.25rem' }}>{member.name}</h3>
+                <p style={{ color: 'var(--accent)', fontWeight: 600 }}>
+                  {t('nav.home') === 'হোম' ? member.roleBn : member.roleEn}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}

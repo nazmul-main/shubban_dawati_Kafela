@@ -1,0 +1,268 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum RoleName {
+  super_admin
+  admin
+  editor
+  author
+  volunteer
+  member
+}
+
+enum Status {
+  PENDING
+  ACTIVE
+  INACTIVE
+  APPROVED
+  REJECTED
+}
+
+model User {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+  email     String   @unique
+  phone     String?
+  password  String
+  avatar    String?
+  roleId    String   @db.Uuid @map("role_id")
+  role      Role     @relation(fields: [roleId], references: [id])
+  status    Status   @default(ACTIVE)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  pagesCreated Page[] @relation("PageCreator")
+  pagesUpdated Page[] @relation("PageUpdater")
+  postsCreated Post[] @relation("PostCreator")
+
+  @@map("users")
+}
+
+model Role {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        RoleName @unique
+  permissions Json     // Store permission keys as a JSON array (e.g., ["manage_posts"])
+  users       User[]
+
+  @@map("roles")
+}
+
+model Permission {
+  id     String @id @default(uuid()) @db.Uuid
+  name   String
+  key    String @unique
+  module String
+
+  @@map("permissions")
+}
+
+model Page {
+  id          String   @id @default(uuid()) @db.Uuid
+  titleBn     String   @map("title_bn")
+  titleEn     String   @map("title_en")
+  slugBn      String   @unique @map("slug_bn")
+  slugEn      String   @unique @map("slug_en")
+  contentBn   String   @map("content_bn") @db.Text
+  contentEn   String   @map("content_en") @db.Text
+  seoTitleBn  String?  @map("seo_title_bn")
+  seoTitleEn  String?  @map("seo_title_en")
+  seoDescBn   String?  @map("seo_desc_bn") @db.Text
+  seoDescEn   String?  @map("seo_desc_en") @db.Text
+  status      Status   @default(ACTIVE)
+  createdById String   @db.Uuid @map("created_by_id")
+  createdBy   User     @relation("PageCreator", fields: [createdById], references: [id])
+  updatedById String?  @db.Uuid @map("updated_by_id")
+  updatedBy   User?    @relation("PageUpdater", fields: [updatedById], references: [id])
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  seoRecord   Seo?
+
+  @@map("pages")
+}
+
+model Category {
+  id     String @id @default(uuid()) @db.Uuid
+  nameBn String @map("name_bn")
+  nameEn String @map("name_en")
+  slug   String @unique
+  type   String // e.g., "post", "gallery", "video"
+  posts  Post[]
+
+  @@map("categories")
+}
+
+model Tag {
+  id     String @id @default(uuid()) @db.Uuid
+  nameBn String @map("name_bn")
+  nameEn String @map("name_en")
+  slug   String @unique
+  posts  Post[] @relation("PostTags")
+
+  @@map("tags")
+}
+
+model Post {
+  id          String   @id @default(uuid()) @db.Uuid
+  titleBn     String   @map("title_bn")
+  titleEn     String   @map("title_en")
+  slugBn      String   @unique @map("slug_bn")
+  slugEn      String   @unique @map("slug_en")
+  contentBn   String   @map("content_bn") @db.Text
+  contentEn   String   @map("content_en") @db.Text
+  thumbnail   String?
+  categoryId  String   @db.Uuid @map("category_id")
+  category    Category @relation(fields: [categoryId], references: [id])
+  tags        Tag[]    @relation("PostTags")
+  status      Status   @default(ACTIVE)
+  views       Int      @default(0)
+  createdById String   @db.Uuid @map("created_by_id")
+  createdBy   User     @relation("PostCreator", fields: [createdById], references: [id])
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("posts")
+}
+
+model Event {
+  id            String   @id @default(uuid()) @db.Uuid
+  titleBn       String   @map("title_bn")
+  titleEn       String   @map("title_en")
+  descriptionBn String   @map("description_bn") @db.Text
+  descriptionEn String   @map("description_en") @db.Text
+  location      String
+  eventDate     DateTime @map("event_date")
+  thumbnail     String?
+  status        Status   @default(ACTIVE)
+
+  @@map("events")
+}
+
+model Notice {
+  id            String   @id @default(uuid()) @db.Uuid
+  titleBn       String   @map("title_bn")
+  titleEn       String   @map("title_en")
+  descriptionBn String   @map("description_bn") @db.Text
+  descriptionEn String   @map("description_en") @db.Text
+  fileUrl       String?  @map("file_url")
+  priority      Int      @default(0)
+  status        Status   @default(ACTIVE)
+
+  @@map("notices")
+}
+
+model Gallery {
+  id        String   @id @default(uuid()) @db.Uuid
+  titleBn   String   @map("title_bn")
+  titleEn   String   @map("title_en")
+  imageUrl  String   @map("image_url")
+  category  String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("gallery")
+}
+
+model Video {
+  id         String @id @default(uuid()) @db.Uuid
+  titleBn    String @map("title_bn")
+  titleEn    String @map("title_en")
+  youtubeUrl String @map("youtube_url")
+  thumbnail  String
+  category   String
+
+  @@map("videos")
+}
+
+model Book {
+  id         String @id @default(uuid()) @db.Uuid
+  titleBn    String @map("title_bn")
+  titleEn    String @map("title_en")
+  author     String
+  pdfUrl     String @map("pdf_url")
+  coverImage String @map("cover_image")
+  downloads  Int    @default(0)
+
+  @@map("books")
+}
+
+model File {
+  id         String   @id @default(uuid()) @db.Uuid
+  name       String
+  fileUrl    String   @map("file_url")
+  type       String
+  uploadedBy String   @db.Uuid @map("uploaded_by")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@map("files")
+}
+
+model Donation {
+  id            String   @id @default(uuid()) @db.Uuid
+  name          String
+  email         String
+  phone         String
+  amount        Float
+  method        String
+  transactionId String   @unique @map("transaction_id")
+  status        Status   @default(PENDING)
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@map("donations")
+}
+
+model Volunteer {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+  phone     String
+  email     String
+  address   String
+  skills    String
+  status    Status   @default(PENDING)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("volunteers")
+}
+
+model Contact {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+  email     String
+  message   String   @db.Text
+  status    Status   @default(PENDING)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("contacts")
+}
+
+model Setting {
+  id          String @id @default("global-settings")
+  siteNameBn  String @map("site_name_bn")
+  siteNameEn  String @map("site_name_en")
+  logo        String
+  favicon     String
+  email       String
+  phone       String
+  addressBn   String @map("address_bn")
+  addressEn   String @map("address_en")
+  socialLinks Json   @map("social_links")
+
+  @@map("settings")
+}
+
+model Seo {
+  id          String  @id @default(uuid()) @db.Uuid
+  pageId      String  @unique @db.Uuid @map("page_id")
+  page        Page    @relation(fields: [pageId], references: [id])
+  metaTitleBn String  @map("meta_title_bn")
+  metaTitleEn String  @map("meta_title_en")
+  metaDescBn  String  @map("meta_desc_bn") @db.Text
+  metaDescEn  String  @map("meta_desc_en") @db.Text
+  keywords    String
+  ogImage     String? @map("og_image")
+
+  @@map("seo")
+}
