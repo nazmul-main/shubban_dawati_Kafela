@@ -15,7 +15,7 @@ export default async function AdminPostsPage() {
     <div className={styles.wrapper}>
       <div className={styles.welcome}>
         <h1>Manage Posts & News</h1>
-        <p>View, create, and manage your platform's publications.</p>
+        <p>View, create, and manage your platform&apos;s publications.</p>
       </div>
       
       <div className={styles.tableWrapper}>
