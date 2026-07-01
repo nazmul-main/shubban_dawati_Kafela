@@ -19,7 +19,7 @@ const postSchema = z.object({
 // Create a new post
 export async function createPost(prevState: any, formData: FormData) {
   const session = await auth();
-  if (!session || !session.user) {
+  if (!session || !session.user || !session.user.id) {
     return { error: 'Unauthorized. You must be logged in to create a post.' };
   }
 
@@ -43,7 +43,7 @@ export async function createPost(prevState: any, formData: FormData) {
     const post = await prisma.post.create({
       data: {
         ...parsed.data,
-        createdById: session.user.id,
+        createdById: session.user.id as string,
         status: 'ACTIVE',
       },
     });
