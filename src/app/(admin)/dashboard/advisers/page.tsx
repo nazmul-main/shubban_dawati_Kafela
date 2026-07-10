@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import { Plus, Edit2, Trash2, X, Save } from 'lucide-react'
+import React, { useState, useEffect, useRef } from 'react'
+import { Plus, Edit2, Trash2, X, Save, Upload, Loader2 } from 'lucide-react'
 import styles from './AdvisersAdmin.module.css'
 
 interface Adviser {
@@ -23,6 +23,13 @@ export default function AdvisersAdminPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null)
+  const [isDeleting, setIsDeleting] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
+  const [toast, setToast] = useState<{ message: string, type: 'success' | 'error' } | null>(null)
+  const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const [uploading, setUploading] = useState(false)
+  const [uploadError, setUploadError] = useState<string | null>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
   const [formData, setFormData] = useState({
     nameBn: '',
     nameEn: '',
@@ -33,6 +40,11 @@ export default function AdvisersAdminPage() {
     image: '',
     order: '0',
   })
+
+  const showToast = (message: string, type: 'success' | 'error') => {
+    setToast({ message, type })
+    setTimeout(() => setToast(null), 3000)
+  }
 
   useEffect(() => {
     fetchAdvisers()
@@ -73,6 +85,7 @@ export default function AdvisersAdminPage() {
         image: adviser.image || '',
         order: adviser.order.toString(),
       })
+      setImagePreview(adviser.image || null)
     } else {
       setEditingId(null)
       setFormData({
@@ -85,17 +98,59 @@ export default function AdvisersAdminPage() {
         image: '',
         order: '0',
       })
+      setImagePreview(null)
     }
     setIsModalOpen(true)
+  }
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setUploadError(null)
+    // Show local preview immediately
+    const localUrl = URL.createObjectURL(file)
+    setImagePreview(localUrl)
+    setUploading(true)
+
+    try {
+      const uploadFormData = new FormData()
+      uploadFormData.append('file', file)
+
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: uploadFormData,
+      })
+
+      if (res.ok) {
+        const data = await res.json()
+        setFormData(prev => ({ ...prev, image: data.url }))
+        setImagePreview(data.url)
+      } else {
+        const errData = await res.json().catch(() => ({}))
+        setUploadError(errData?.error || 'ছবি আপলোড ব্যর্থ হয়েছে। আবার চেষ্টা করুন।')
+        setImagePreview(null)
+      }
+    } catch (err) {
+      console.error('Upload error:', err)
+      setUploadError('নেটওয়ার্ক সমস্যা। ছবি আপলোড ব্যর্থ হয়েছে।')
+      setImagePreview(null)
+    } finally {
+      setUploading(false)
+    }
   }
 
   const closeModal = () => {
     setIsModalOpen(false)
     setEditingId(null)
+    setImagePreview(null)
+    if (fileInputRef.current) fileInputRef.current.value = ''
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (isSaving) return
+    setIsSaving(true)
     const method = editingId ? 'PUT' : 'POST'
     const url = editingId ? `/api/advisers/${editingId}` : '/api/advisers'
 
@@ -110,27 +165,36 @@ export default function AdvisersAdminPage() {
       })
       if (res.ok) {
         closeModal()
+        showToast('উপদেষ্টা সফলভাবে সেভ হয়েছে।', 'success')
         fetchAdvisers()
       } else {
-        alert('Failed to save adviser.')
+        showToast('উপদেষ্টা সেভ করতে সমস্যা হয়েছে।', 'error')
       }
     } catch (err) {
       console.error(err)
-      alert('An error occurred.')
+      showToast('একটি ত্রুটি ঘটেছে।', 'error')
+    } finally {
+      setIsSaving(false)
     }
   }
 
   const handleDelete = async (id: string) => {
+    if (isDeleting) return
+    setIsDeleting(true)
     try {
       const res = await fetch(`/api/advisers/${id}`, { method: 'DELETE' })
       if (res.ok) {
         setConfirmDeleteId(null)
+        showToast('উপদেষ্টা সফলভাবে মুছে ফেলা হয়েছে।', 'success')
         fetchAdvisers()
       } else {
-        alert('Failed to delete adviser.')
+        showToast('উপদেষ্টা মুছতে সমস্যা হয়েছে।', 'error')
       }
     } catch (err) {
       console.error(err)
+      showToast('একটি ত্রুটি ঘটেছে।', 'error')
+    } finally {
+      setIsDeleting(false)
     }
   }
 
@@ -223,16 +287,65 @@ export default function AdvisersAdminPage() {
                 <input type="text" name="titleEn" value={formData.titleEn} onChange={handleInputChange} placeholder="e.g. Mufti / PhD" />
               </div>
               <div className={styles.formGroup}>
-                <label>Image URL</label>
-                <input type="text" name="image" value={formData.image} onChange={handleInputChange} placeholder="e.g. /images/advisers/avatar.jpg" />
+                <label>ছবি আপলোড করুন (Upload Photo)</label>
+                <div className={styles.imageUploadArea}>
+                  {imagePreview ? (
+                    <div className={styles.imagePreviewWrapper}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={imagePreview} alt="Preview" className={styles.imagePreview} />
+                      <button
+                        type="button"
+                        className={styles.removeImageBtn}
+                        onClick={() => {
+                          setImagePreview(null)
+                          setFormData(prev => ({ ...prev, image: '' }))
+                          if (fileInputRef.current) fileInputRef.current.value = ''
+                        }}
+                      >
+                        <X size={16} /> Remove
+                      </button>
+                    </div>
+                  ) : (
+                    <label className={styles.uploadLabel} htmlFor="adviser-image-upload">
+                      {uploading ? (
+                        <>
+                          <Loader2 size={24} className={styles.spinning} />
+                          <span>Uploading...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Upload size={24} />
+                          <span>Click to upload photo</span>
+                          <small>JPG, PNG, WEBP (max 5MB)</small>
+                        </>
+                      )}
+                    </label>
+                  )}
+                  <input
+                    ref={fileInputRef}
+                    id="adviser-image-upload"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    disabled={uploading}
+                    style={{ display: 'none' }}
+                  />
+                </div>
+                {uploadError && (
+                  <p style={{ color: '#ef4444', fontSize: '0.85rem', marginTop: '0.5rem', fontWeight: 600 }}>
+                    ⚠️ {uploadError}
+                  </p>
+                )}
               </div>
               <div className={styles.formGroup}>
                 <label>Sort Order (ক্রম) - প্রধান উপদেষ্টার মান ১ রাখুন (সবচেয়ে উপরে রাখতে)</label>
                 <input type="number" name="order" value={formData.order} onChange={handleInputChange} />
               </div>
               <div className={styles.modalFooter}>
-                <button type="button" className={styles.cancelBtn} onClick={closeModal}>Cancel</button>
-                <button type="submit" className={styles.saveBtn}><Save size={16} /> Save</button>
+                <button type="button" className={styles.cancelBtn} onClick={closeModal} disabled={isSaving}>Cancel</button>
+                <button type="submit" className={styles.saveBtn} disabled={isSaving}>
+                  {isSaving ? <Loader2 size={16} className={styles.spinning} /> : <Save size={16} />} Save
+                </button>
               </div>
             </form>
           </div>
@@ -249,10 +362,30 @@ export default function AdvisersAdminPage() {
             <h3 className={styles.confirmTitle}>Delete Adviser?</h3>
             <p className={styles.confirmText}>এই উপদেষ্টাকে মুছে ফেলা হবে। এই কাজটি আর ফেরানো যাবে না।</p>
             <div className={styles.confirmActions}>
-              <button className={styles.cancelBtn} onClick={() => setConfirmDeleteId(null)}>বাতিল করুন</button>
-              <button className={styles.confirmDeleteBtn} onClick={() => handleDelete(confirmDeleteId)}>হ্যাঁ, মুছুন</button>
+              <button className={styles.cancelBtn} onClick={() => setConfirmDeleteId(null)} disabled={isDeleting}>বাতিল করুন</button>
+              <button className={styles.confirmDeleteBtn} onClick={() => handleDelete(confirmDeleteId)} disabled={isDeleting}>
+                {isDeleting ? 'মুছছে...' : 'হ্যাঁ, মুছুন'}
+              </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {toast && (
+        <div style={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          padding: '12px 24px',
+          backgroundColor: toast.type === 'success' ? '#10b981' : '#ef4444',
+          color: 'white',
+          borderRadius: '8px',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+          zIndex: 9999,
+          fontWeight: 600,
+          animation: 'fadeIn 0.3s ease'
+        }}>
+          {toast.message}
         </div>
       )}
     </div>

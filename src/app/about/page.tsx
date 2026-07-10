@@ -1,12 +1,44 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useLanguage } from '@/components/context/LanguageContext'
 import { CheckCircle, ShieldAlert, Award, Landmark } from 'lucide-react'
 import styles from './About.module.css'
 
+interface AdviserProps {
+  id: string
+  nameBn: string
+  nameEn: string
+  designationBn: string
+  designationEn: string
+  titleBn: string | null
+  titleEn: string | null
+  image: string | null
+  order: number
+  status: string
+}
+
 export default function AboutPage() {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
+  const [advisers, setAdvisers] = useState<AdviserProps[]>([])
+
+  useEffect(() => {
+    const fetchAdvisers = async () => {
+      try {
+        const res = await fetch('/api/advisers')
+        if (res.ok) {
+          const data = await res.json()
+          if (Array.isArray(data)) {
+            const active = data.filter((adv: AdviserProps) => adv.status === 'ACTIVE')
+            setAdvisers(active)
+          }
+        }
+      } catch (err) {
+        console.error('Failed to fetch advisers', err)
+      }
+    }
+    fetchAdvisers()
+  }, [])
 
   const objectives = [
     {
@@ -29,12 +61,7 @@ export default function AboutPage() {
     },
   ]
 
-  const team = [
-    { name: 'আবু বকর সিদ্দীক (Abu Bakr)', roleBn: 'সভাপতি', roleEn: 'President' },
-    { name: 'উমর ফারূক (Umar Farooq)', roleBn: 'সাধারণ সম্পাদক', roleEn: 'General Secretary' },
-    { name: 'উসমান ইবনে আফফান (Uthman)', roleBn: 'কোষাধ্যক্ষ', roleEn: 'Treasurer' },
-  ]
-
+  // Remove static advisoryBoard
   return (
     <div className={styles.wrapper}>
       {/* Banner */}
@@ -124,27 +151,40 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Team Section */}
-      <section className={`${styles.teamSection} section`}>
-        <div className="container">
-          <h2 className="heading-lg text-center" style={{ marginBottom: '3rem' }}>
-            {t('nav.home') === 'হোম' ? 'পরিচালনা পর্ষদ' : 'Executive Board'}
-          </h2>
-          <div className={styles.teamGrid}>
-            {team.map((member, idx) => (
-              <div key={idx} className="card card-hover text-center">
-                <div className={styles.avatarPlaceholder}>
-                  <span>{member.name.charAt(0)}</span>
+      {/* Advisory Board Section */}
+      {advisers.length > 0 && (
+        <section className={`${styles.teamSection} section`}>
+          <div className="container">
+            <h2 className="heading-lg text-center" style={{ marginBottom: '3rem' }}>
+              {language === 'bn' ? 'উপদেষ্টা পরিষদ' : 'Advisory Board'}
+            </h2>
+            <div className={styles.teamGrid}>
+              {advisers.map((adv) => (
+                <div key={adv.id} className={styles.teamCard}>
+                  {adv.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img 
+                      src={adv.image} 
+                      alt={language === 'bn' ? adv.nameBn : adv.nameEn} 
+                      className={styles.adviserImage}
+                    />
+                  ) : (
+                    <div className={styles.avatarPlaceholder}>
+                      <span>{language === 'bn' ? adv.nameBn.charAt(0) : adv.nameEn.charAt(0)}</span>
+                    </div>
+                  )}
+                  <h3 className="heading-sm" style={{ margin: '1rem 0 0.25rem', fontSize: '1.1rem' }}>
+                    {language === 'bn' ? adv.nameBn : adv.nameEn}
+                  </h3>
+                  <p style={{ color: 'var(--accent)', fontWeight: 600, fontSize: '0.9rem' }}>
+                    {language === 'bn' ? adv.designationBn : adv.designationEn}
+                  </p>
                 </div>
-                <h3 className="heading-sm" style={{ margin: '1rem 0 0.25rem' }}>{member.name}</h3>
-                <p style={{ color: 'var(--accent)', fontWeight: 600 }}>
-                  {t('nav.home') === 'হোম' ? member.roleBn : member.roleEn}
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
     </div>
   )
 }

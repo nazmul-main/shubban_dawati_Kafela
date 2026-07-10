@@ -223,77 +223,36 @@ export default function HomePage() {
               {language === 'bn' ? 'উপদেষ্টা পরিষদ' : 'Advisory Council'}
             </h2>
 
-            {/* Chief Advisor / Top Advisor */}
-            {advisers[0] && (
-              <div className={styles.chiefAdviserContainer}>
-                <div className={`${styles.adviserCard} ${styles.chiefCard}`}>
-                  <div className={styles.avatarWrapper}>
-                    {advisers[0].image ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img 
-                        src={advisers[0].image} 
-                        alt={language === 'bn' ? advisers[0].nameBn : advisers[0].nameEn} 
-                        className={styles.adviserImage}
-                      />
-                    ) : (
-                      <div className={styles.avatarPlaceholder}>
-                        {advisers[0].nameBn.charAt(0)}
-                      </div>
-                    )}
-                  </div>
-                  <div className={styles.adviserInfo}>
-                    <span className={styles.adviserDesignation}>
-                      {language === 'bn' ? advisers[0].designationBn : advisers[0].designationEn}
-                    </span>
-                    <h3 className={styles.adviserName}>
-                      {language === 'bn' ? advisers[0].nameBn : advisers[0].nameEn}
-                    </h3>
-                    {advisers[0].titleBn && (
-                      <p className={styles.adviserTitle}>
-                        {language === 'bn' ? advisers[0].titleBn : advisers[0].titleEn}
-                      </p>
-                    )}
-                  </div>
+            <div className={styles.teamGrid}>
+              {advisers.slice(0, 3).map((adv) => (
+                <div key={adv.id} className={styles.teamCard}>
+                  {adv.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img 
+                      src={adv.image} 
+                      alt={language === 'bn' ? adv.nameBn : adv.nameEn} 
+                      className={styles.adviserImage}
+                    />
+                  ) : (
+                    <div className={styles.avatarPlaceholder}>
+                      <span>{language === 'bn' ? adv.nameBn.charAt(0) : adv.nameEn.charAt(0)}</span>
+                    </div>
+                  )}
+                  <h3 className="heading-sm" style={{ margin: '1rem 0 0.25rem', fontSize: '1.1rem' }}>
+                    {language === 'bn' ? adv.nameBn : adv.nameEn}
+                  </h3>
+                  <p style={{ color: 'var(--accent)', fontWeight: 600, fontSize: '0.9rem' }}>
+                    {language === 'bn' ? adv.designationBn : adv.designationEn}
+                  </p>
                 </div>
-              </div>
-            )}
+              ))}
+            </div>
 
-            {/* Other Advisers Grid */}
-            {advisers.length > 1 && (
-              <div className={styles.advisersGrid}>
-                {advisers.slice(1).map((adv) => (
-                  <div key={adv.id} className={styles.adviserCard}>
-                    <div className={styles.avatarWrapper}>
-                      {adv.image ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img 
-                          src={adv.image} 
-                          alt={language === 'bn' ? adv.nameBn : adv.nameEn} 
-                          className={styles.adviserImage}
-                        />
-                      ) : (
-                        <div className={styles.avatarPlaceholder}>
-                          {adv.nameBn.charAt(0)}
-                        </div>
-                      )}
-                    </div>
-                    <div className={styles.adviserInfo}>
-                      <span className={styles.adviserDesignation}>
-                        {language === 'bn' ? adv.designationBn : adv.designationEn}
-                      </span>
-                      <h3 className={styles.adviserName}>
-                        {language === 'bn' ? adv.nameBn : adv.nameEn}
-                      </h3>
-                      {adv.titleBn && (
-                        <p className={styles.adviserTitle}>
-                          {language === 'bn' ? adv.titleBn : adv.titleEn}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}>
+              <Link href="/about" className="btn btn-outline-gold">
+                {language === 'bn' ? 'বাকিগুলো দেখুন' : 'View All Advisors'} <ArrowRight size={18} />
+              </Link>
+            </div>
           </div>
         </section>
       )}
