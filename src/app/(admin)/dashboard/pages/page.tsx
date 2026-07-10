@@ -1,8 +1,5 @@
 import React from 'react';
 import prisma from '@/lib/db';
-import Link from 'next/link';
-import { Edit } from 'lucide-react';
-import DeletePageButton from './DeletePageButton';
 import styles from '../Dashboard.module.css';
 
 export default async function AdminPagesPage() {
@@ -13,16 +10,11 @@ export default async function AdminPagesPage() {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.welcome} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div>
-          <h1>Manage Static Pages & Tabs</h1>
-          <p>Create and edit website pages and About Us tabs (slug: about-intro).</p>
-        </div>
-        <Link href="/dashboard/pages/create" className="btn btn-primary">
-          + Add New Page
-        </Link>
+      <div className={styles.welcome}>
+        <h1>Manage Static Pages</h1>
+        <p>Create and edit website pages.</p>
       </div>
-      
+
       <div className={styles.tableWrapper}>
         <table className={styles.table}>
           <thead>
@@ -30,14 +22,14 @@ export default async function AdminPagesPage() {
               <th>Title (EN)</th>
               <th>Slug</th>
               <th>Author</th>
+              <th>Status</th>
               <th>Last Updated</th>
-              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {pages.length === 0 ? (
               <tr>
-                <td colSpan={5}>No pages found. Click Add New Page to get started.</td>
+                <td colSpan={5}>No pages found.</td>
               </tr>
             ) : (
               pages.map((page) => (
@@ -45,18 +37,8 @@ export default async function AdminPagesPage() {
                   <td className={styles.boldCell}>{page.titleEn}</td>
                   <td>/{page.slugEn}</td>
                   <td>{page.createdBy?.name || 'Admin'}</td>
+                  <td>{page.status}</td>
                   <td>{new Date(page.updatedAt).toLocaleDateString()}</td>
-                  <td style={{ display: 'flex', gap: '0.5rem' }}>
-                    <Link 
-                      href={`/dashboard/pages/${page.id}/edit`} 
-                      className="btn btn-sm btn-outline"
-                      style={{ padding: '0.25rem 0.5rem' }}
-                      title="Edit Page"
-                    >
-                      <Edit size={14} />
-                    </Link>
-                    <DeletePageButton id={page.id} />
-                  </td>
                 </tr>
               ))
             )}
