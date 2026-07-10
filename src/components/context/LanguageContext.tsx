@@ -22,14 +22,14 @@ const translations: Record<Language, Record<string, string>> = {
     // Navbar
     'nav.home': 'হোম',
     'nav.about': 'আমাদের সম্পর্কে',
-    'nav.news': 'খবর ও নোটিশ',
-    'nav.events': 'ইভেন্ট সমূহ',
-    'nav.library': 'লাইব্রেরি',
-    'nav.donate': 'দান করুন',
+    'nav.constitution': 'গঠনতন্ত্র',
+    'nav.activities': 'আমাদের কার্যক্রম',
+    'nav.gallery': 'গ্যালারী',
+    'nav.blog': 'ব্লগ',
     'nav.contact': 'যোগাযোগ',
     'nav.login': 'লগইন',
     'nav.dashboard': 'ড্যাশবোর্ড',
-    
+
     // Banner & Hero
     'hero.title': 'শুব্বান দাওয়াতি কাফেলা',
     'hero.subtitle': 'দ্বীন প্রচার ও সমাজ সেবায় একদল নিবেদিতপ্রাণ তরুণ কাফেলা। নৈতিক সমাজ গঠনে আমাদের সাথে যোগ দিন।',
@@ -91,28 +91,33 @@ const translations: Record<Language, Record<string, string>> = {
     'contact.message': 'আপনার বার্তা',
     'contact.submit': 'বার্তা পাঠান',
     'contact.success': 'ধন্যবাদ! আপনার বার্তাটি আমরা পেয়েছি।',
+
+    // 404 Page
+    '404.title': '৪০৪ - পৃষ্ঠাটি খুঁজে পাওয়া যায়নি',
+    '404.subtitle': 'দুঃখিত, আপনি যে পৃষ্ঠাটি খুঁজছেন তা মুছে ফেলা হয়েছে বা এর নাম পরিবর্তন করা হয়েছে।',
+    '404.back': 'হোম পেজে ফিরে যান',
   },
   en: {
     // General
-    'site.title': 'Shubban Dawah Caravan',
+    'site.title': 'Shubban Dawati Kafela',
     'site.footer.desc': 'A group of dedicated youth in Islamic Dawah and social service. We call the youth to the noble values and principles of Islam.',
     'site.footer.links': 'Important Links',
     'site.footer.contact': 'Contact Address',
-    'site.rights': 'All rights reserved © 2026 Shubban Dawah Caravan',
+    'site.rights': 'All rights reserved © 2026 Shubban Dawati Kafela',
 
     // Navbar
     'nav.home': 'Home',
     'nav.about': 'About Us',
-    'nav.news': 'News & Notices',
-    'nav.events': 'Events',
-    'nav.library': 'Library',
-    'nav.donate': 'Donate',
+    'nav.constitution': 'Constitution',
+    'nav.activities': 'Our Activities',
+    'nav.gallery': 'Gallery',
+    'nav.blog': 'Blog',
     'nav.contact': 'Contact',
     'nav.login': 'Login',
     'nav.dashboard': 'Dashboard',
 
     // Banner & Hero
-    'hero.title': 'Shubban Dawah Caravan',
+    'hero.title': 'Shubban Dawati Kafela',
     'hero.subtitle': 'A group of dedicated youth in Islamic Dawah and social service. Join us in building a moral society.',
     'hero.cta': 'Be a Volunteer',
     'hero.donate': 'Support Us',
@@ -126,7 +131,7 @@ const translations: Record<Language, Record<string, string>> = {
 
     // About Section
     'about.title': 'Who We Are',
-    'about.desc1': 'Shubban Dawah Caravan is a non-political, social, and Islamic youth organization. We work for the self-purification, moral development, and Islamic education of the youth.',
+    'about.desc1': 'Shubban Dawati Kafela is a non-political, social, and Islamic youth organization. We work for the self-purification, moral development, and Islamic education of the youth.',
     'about.desc2': 'Through cultural activities, social relief efforts, seminars, and publication works, we seek to raise a generation of conscious and practicing Muslim youths.',
     'about.vision': 'Our Vision',
     'about.mission': 'Our Mission',
@@ -172,6 +177,11 @@ const translations: Record<Language, Record<string, string>> = {
     'contact.message': 'Your Message',
     'contact.submit': 'Send Message',
     'contact.success': 'Thank you! We have received your message.',
+
+    // 404 Page
+    '404.title': '404 - Page Not Found',
+    '404.subtitle': 'Sorry, the page you are looking for might have been removed or had its name changed.',
+    '404.back': 'Back to Home',
   }
 }
 

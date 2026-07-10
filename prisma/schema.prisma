@@ -266,3 +266,18 @@ model Seo {
 
   @@map("seo")
 }
+
+model Activity {
+  id            String   @id @default(uuid()) @db.Uuid
+  titleBn       String   @map("title_bn")
+  titleEn       String   @map("title_en")
+  descriptionBn String   @map("description_bn") @db.Text
+  descriptionEn String   @map("description_en") @db.Text
+  icon          String?
+  image         String?
+  status        Status   @default(ACTIVE)
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@map("activities")
+}

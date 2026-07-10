@@ -19,7 +19,7 @@ const notoSansBengali = Noto_Sans_Bengali({
 })
 
 export const metadata: Metadata = {
-  title: 'শুব্বান দাওয়াতি কাফেলা | Shubban Dawah Caravan',
+  title: 'শুব্বান দাওয়াতি কাফেলা | Shubban Dawati Kafela',
   description: 'দ্বীন প্রচার ও সমাজ সেবায় একদল নিবেদিতপ্রাণ তরুণ কাফেলা।',
 }
 

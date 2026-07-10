@@ -35,10 +35,10 @@ export default function Navbar() {
   const navLinks = [
     { href: '/', label: 'nav.home' },
     { href: '/about', label: 'nav.about' },
-    { href: '/news', label: 'nav.news' },
-    { href: '/events', label: 'nav.events' },
-    { href: '/library', label: 'nav.library' },
-    { href: '/donate', label: 'nav.donate' },
+    { href: '/constitution', label: 'nav.constitution' },
+    { href: '/activities', label: 'nav.activities' },
+    { href: '/gallery', label: 'nav.gallery' },
+    { href: '/blog', label: 'nav.blog' },
     { href: '/contact', label: 'nav.contact' },
   ]
 

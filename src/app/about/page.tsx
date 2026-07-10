@@ -93,7 +93,7 @@ export default function AboutPage() {
               <p className={styles.historyText}>
                 {t('nav.home') === 'হোম'
                   ? 'শুব্বান দাওয়াতি কাফেলা ২০১৬ সালে কিছু উদ্যমী ও দ্বীনদার তরুণের সমন্বয়ে প্রতিষ্ঠিত হয়। সূচনালগ্ন থেকেই এটি তরুণদের চারিত্রিক সংশোধন ও সামাজিক কল্যাণে নানামুখী কাজ পরিচালনা করে আসছে।'
-                  : 'Shubban Dawah Caravan was established in 2016 by a group of energetic and pious youths. Since its inception, it has been executing various activities for character reformation and social welfare.'}
+                  : 'Shubban Dawati Kafela was established in 2016 by a group of energetic and pious youths. Since its inception, it has been executing various activities for character reformation and social welfare.'}
               </p>
             </div>
           </div>

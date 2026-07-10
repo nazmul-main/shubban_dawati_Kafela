@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Users, FileText, Heart, UserPlus, CheckCircle, Clock } from 'lucide-react'
+import { Users, FileText, Heart, UserPlus, Clock } from 'lucide-react'
 import styles from './Dashboard.module.css'
 
 export default function AdminDashboardPage() {
@@ -29,7 +29,7 @@ export default function AdminDashboardPage() {
       {/* Welcome message */}
       <div className={styles.welcome}>
         <h1>Assalamu Alaikum, Administrator</h1>
-        <p>Here is what is happening with the Shubban Dawah Caravan portal today.</p>
+        <p>Here is what is happening with the Shubban Dawati Kafela portal today.</p>
       </div>
 
       {/* Stats row */}

@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { 
   LayoutDashboard, Users, FileText, FileCode, Calendar, 
-  Image, Heart, UserPlus, Settings as SettingsIcon, LogOut, ArrowLeft 
+  Image, Settings as SettingsIcon, LogOut, ArrowLeft 
 } from 'lucide-react'
 import styles from './AdminLayout.module.css'
 
@@ -19,13 +19,13 @@ export default function AdminLayout({
 
   const menuItems = [
     { href: '/dashboard', label: 'Dashboard', icon: <LayoutDashboard size={18} /> },
-    { href: '/dashboard/users', label: 'Users', icon: <Users size={18} /> },
-    { href: '/dashboard/posts', label: 'Posts', icon: <FileText size={18} /> },
-    { href: '/dashboard/pages', label: 'Pages', icon: <FileCode size={18} /> },
-    { href: '/dashboard/events', label: 'Events', icon: <Calendar size={18} /> },
+    { href: '/dashboard/pages/home', label: 'Home', icon: <FileCode size={18} /> },
+    { href: '/dashboard/pages/about', label: 'About Us', icon: <FileCode size={18} /> },
+    { href: '/dashboard/pages/constitution', label: 'Constitution', icon: <FileCode size={18} /> },
+    { href: '/dashboard/activities', label: 'Activities', icon: <Calendar size={18} /> },
     { href: '/dashboard/gallery', label: 'Gallery', icon: <Image size={18} /> },
-    { href: '/dashboard/donations', label: 'Donations', icon: <Heart size={18} /> },
-    { href: '/dashboard/volunteers', label: 'Volunteers', icon: <UserPlus size={18} /> },
+    { href: '/dashboard/blog', label: 'Blog', icon: <FileText size={18} /> },
+    { href: '/dashboard/contacts', label: 'Contacts', icon: <Users size={18} /> },
     { href: '/dashboard/settings', label: 'Settings', icon: <SettingsIcon size={18} /> },
   ]
 
