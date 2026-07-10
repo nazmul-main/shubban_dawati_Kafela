@@ -23,6 +23,7 @@ export default function AdminLayout({
     { href: '/dashboard/pages/about', label: 'About Us', icon: <FileCode size={18} /> },
     { href: '/dashboard/pages/constitution', label: 'Constitution', icon: <FileCode size={18} /> },
     { href: '/dashboard/activities', label: 'Activities', icon: <Calendar size={18} /> },
+    { href: '/dashboard/advisers', label: 'Advisers', icon: <Users size={18} /> },
     { href: '/dashboard/gallery', label: 'Gallery', icon: <Image size={18} /> },
     { href: '/dashboard/blog', label: 'Blog', icon: <FileText size={18} /> },
     { href: '/dashboard/contacts', label: 'Contacts', icon: <Users size={18} /> },

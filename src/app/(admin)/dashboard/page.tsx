@@ -1,7 +1,8 @@
 'use client'
 
 import React from 'react'
-import { Users, FileText, Heart, UserPlus, Clock } from 'lucide-react'
+import Link from 'next/link'
+import { Users, FileText, Heart, UserPlus, Clock, Calendar } from 'lucide-react'
 import styles from './Dashboard.module.css'
 
 export default function AdminDashboardPage() {
@@ -30,6 +31,16 @@ export default function AdminDashboardPage() {
       <div className={styles.welcome}>
         <h1>Assalamu Alaikum, Administrator</h1>
         <p>Here is what is happening with the Shubban Dawati Kafela portal today.</p>
+      </div>
+
+      {/* Quick Actions */}
+      <div style={{ display: 'flex', gap: '1rem', marginBottom: '2.5rem', flexWrap: 'wrap' }}>
+        <Link href="/dashboard/advisers" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', textDecoration: 'none', padding: '0.75rem 1.5rem', borderRadius: '0.5rem', backgroundColor: 'var(--primary-color)', color: 'white', fontWeight: 600, transition: 'opacity 0.2s' }}>
+          <Users size={18} /> Manage Advisory Council (উপদেষ্টা পরিষদ)
+        </Link>
+        <Link href="/dashboard/activities" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', textDecoration: 'none', padding: '0.75rem 1.5rem', borderRadius: '0.5rem', border: '1px solid var(--border-color)', color: 'var(--text-color)', fontWeight: 600, transition: 'background-color 0.2s' }}>
+          <Calendar size={18} /> Manage Activities (কার্যক্রমসমূহ)
+        </Link>
       </div>
 
       {/* Stats row */}

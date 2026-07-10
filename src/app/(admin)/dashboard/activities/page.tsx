@@ -20,6 +20,7 @@ export default function ActivitiesAdminPage() {
   const [loading, setLoading] = useState(true)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     titleBn: '',
     titleEn: '',
@@ -100,11 +101,10 @@ export default function ActivitiesAdminPage() {
   }
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this activity?')) return
-
     try {
       const res = await fetch(`/api/activities/${id}`, { method: 'DELETE' })
       if (res.ok) {
+        setConfirmDeleteId(null)
         fetchActivities()
       } else {
         alert('Failed to delete activity.')
@@ -145,10 +145,10 @@ export default function ActivitiesAdminPage() {
                   <td>
                     <div className={styles.actions}>
                       <button className={styles.editBtn} onClick={() => openModal(act)}>
-                        <Edit2 size={16} />
+                        <Edit2 size={15} /> Edit
                       </button>
-                      <button className={styles.deleteBtn} onClick={() => handleDelete(act.id)}>
-                        <Trash2 size={16} />
+                      <button className={styles.deleteBtn} onClick={() => setConfirmDeleteId(act.id)}>
+                        <Trash2 size={15} /> Delete
                       </button>
                     </div>
                   </td>
@@ -192,6 +192,23 @@ export default function ActivitiesAdminPage() {
                 <button type="submit" className={styles.saveBtn}><Save size={16} /> Save</button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Custom Delete Confirmation Modal */}
+      {confirmDeleteId && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.confirmModal}>
+            <div className={styles.confirmIcon}>
+              <Trash2 size={32} color="#ef4444" />
+            </div>
+            <h3 className={styles.confirmTitle}>Delete Activity?</h3>
+            <p className={styles.confirmText}>এই কার্যক্রমটি মুছে ফেলা হবে। এই কাজটি আর ফেরানো যাবে না।</p>
+            <div className={styles.confirmActions}>
+              <button className={styles.cancelBtn} onClick={() => setConfirmDeleteId(null)}>বাতিল করুন</button>
+              <button className={styles.confirmDeleteBtn} onClick={() => handleDelete(confirmDeleteId)}>হ্যাঁ, মুছুন</button>
+            </div>
           </div>
         </div>
       )}

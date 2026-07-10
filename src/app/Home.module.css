@@ -167,3 +167,145 @@
   opacity: 0.9;
   line-height: 1.6;
 }
+
+/* Advisory Council Section */
+.adviserSection {
+  background-color: var(--bg-light);
+  border-top: 1px solid var(--border-color);
+}
+
+.chiefAdviserContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.advisersGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.adviserCard {
+  background-color: var(--card-bg);
+  border-radius: 1.25rem;
+  padding: 2rem;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.adviserCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.adviserCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+}
+
+.adviserCard:hover::before {
+  opacity: 1;
+}
+
+.chiefCard {
+  max-width: 480px;
+  width: 100%;
+  padding: 2.5rem;
+  border-color: var(--accent);
+  box-shadow: 0 10px 25px rgba(var(--primary-rgb), 0.05);
+}
+
+.chiefCard::before {
+  opacity: 1; /* Always show the gradient top line on chief advisor */
+}
+
+.avatarWrapper {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.adviserImage {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--primary-light);
+  transition: transform 0.3s ease;
+}
+
+.chiefCard .adviserImage {
+  width: 130px;
+  height: 130px;
+  border: 4px solid var(--accent);
+}
+
+.adviserCard:hover .adviserImage {
+  transform: scale(1.05);
+}
+
+.avatarPlaceholder {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background-color: var(--primary-light);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  border: 3px solid var(--primary-light);
+}
+
+.chiefCard .avatarPlaceholder {
+  width: 130px;
+  height: 130px;
+  font-size: 3rem;
+  border: 4px solid var(--accent);
+}
+
+.adviserInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.adviserDesignation {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+}
+
+.adviserName {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--heading-color);
+}
+
+.chiefCard .adviserName {
+  font-size: 1.6rem;
+}
+
+.adviserTitle {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
