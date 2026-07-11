@@ -138,6 +138,27 @@
   opacity: 0.4;
 }
 
+.whoIAmImageBox {
+  border: 4px double var(--accent);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  max-width: 480px;
+  width: 100%;
+}
+
+.whoIAmImageBox:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-lg);
+}
+
+.whoIAmImg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .servicesSection {
   background-color: var(--bg-light);
 }

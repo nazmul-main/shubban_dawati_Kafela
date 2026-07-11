@@ -155,13 +155,28 @@ model Notice {
   @@map("notices")
 }
 
+model GalleryCategory {
+  id     String    @id @default(uuid()) @db.Uuid
+  nameBn String    @map("name_bn")
+  nameEn String    @map("name_en")
+  slug   String    @unique
+  order  Int       @default(0)
+  items  Gallery[]
+
+  @@map("gallery_categories")
+}
+
 model Gallery {
-  id        String   @id @default(uuid()) @db.Uuid
-  titleBn   String   @map("title_bn")
-  titleEn   String   @map("title_en")
-  imageUrl  String   @map("image_url")
-  category  String
-  createdAt DateTime @default(now()) @map("created_at")
+  id         String          @id @default(uuid()) @db.Uuid
+  titleBn    String          @map("title_bn")
+  titleEn    String          @map("title_en")
+  imageUrl   String          @map("image_url")
+  categoryId String?         @db.Uuid @map("category_id")
+  category   GalleryCategory? @relation(fields: [categoryId], references: [id])
+  year       Int             @default(2025)
+  takenAt    DateTime?       @map("taken_at")
+  status     Status          @default(ACTIVE)
+  createdAt  DateTime        @default(now()) @map("created_at")
 
   @@map("gallery")
 }
@@ -298,3 +313,30 @@ model Adviser {
 
   @@map("advisers")
 }
+
+model BlogPost {
+  id         String        @id @default(uuid()) @db.Uuid
+  captionBn  String        @map("caption_bn") @db.Text
+  captionEn  String        @map("caption_en") @db.Text
+  images     String[]      // Array of image URLs (max 4)
+  status     Status        @default(ACTIVE)
+  postedAt   DateTime      @map("posted_at")
+  createdAt  DateTime      @default(now()) @map("created_at")
+  updatedAt  DateTime      @updatedAt @map("updated_at")
+  reactions  BlogReaction[]
+
+  @@map("blog_posts")
+}
+
+model BlogReaction {
+  id        String   @id @default(uuid()) @db.Uuid
+  postId    String   @db.Uuid @map("post_id")
+  post      BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  type      String   // "like" | "love" | "care"
+  sessionId String   @map("session_id") // anonymous tracking
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@unique([postId, sessionId])
+  @@map("blog_reactions")
+}
+

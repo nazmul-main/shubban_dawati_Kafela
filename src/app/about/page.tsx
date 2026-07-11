@@ -1,9 +1,10 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
+import { AdviserCardSkeleton } from '@/components/ui/Skeleton'
 import { useLanguage } from '@/components/context/LanguageContext'
 import { CheckCircle, ShieldAlert, Award, Landmark } from 'lucide-react'
-import { AdviserCardSkeleton } from '@/components/ui/Skeleton'
 import styles from './About.module.css'
 
 interface AdviserProps {
@@ -170,9 +171,9 @@ export default function AboutPage() {
                   <div key={adv.id} className={styles.teamCard}>
                     {adv.image ? (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img 
-                        src={adv.image} 
-                        alt={language === 'bn' ? adv.nameBn : adv.nameEn} 
+                      <img
+                        src={adv.image}
+                        alt={language === 'bn' ? adv.nameBn : adv.nameEn}
                         className={styles.adviserImage}
                       />
                     ) : (

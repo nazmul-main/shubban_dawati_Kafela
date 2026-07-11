@@ -122,6 +122,40 @@
   gap: 20px;
 }
 
+.introGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* Ensure box styling remains */
+.whoIAmBox {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-normal);
+}
+
+.whoIAmBox:hover {
+  transform: scale(1.02);
+}
+
+
+.whoIAmImage {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.introText {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
 .teamCard {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
@@ -154,7 +188,7 @@
   font-size: 1.5rem;
   font-weight: 700;
   border: 2px solid var(--accent);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .adviserImage {
@@ -163,6 +197,6 @@
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--accent);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   margin: 0 auto;
 }

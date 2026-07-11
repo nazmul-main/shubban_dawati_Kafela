@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useLanguage } from '@/components/context/LanguageContext'
 import { Heart, Users, BookOpen, Calendar, ArrowRight, Award, X } from 'lucide-react'
 import * as LucideIcons from 'lucide-react'
@@ -150,8 +151,15 @@ export default function HomePage() {
               </Link>
             </div>
             <div className={styles.aboutVisual}>
-              <div className={styles.patternBox}>
-                <div className={styles.innerPattern}></div>
+              <div className={styles.whoIAmImageBox}>
+                <Image
+                  src="/who_i_am_section-photos.jpg"
+                  alt="আমাদের পরিচয়"
+                  width={560}
+                  height={420}
+                  className={styles.whoIAmImg}
+                  priority
+                />
               </div>
             </div>
           </div>
