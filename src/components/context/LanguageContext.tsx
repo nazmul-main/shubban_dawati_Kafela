@@ -96,6 +96,22 @@ const translations: Record<Language, Record<string, string>> = {
     '404.title': '৪০৪ - পৃষ্ঠাটি খুঁজে পাওয়া যায়নি',
     '404.subtitle': 'দুঃখিত, আপনি যে পৃষ্ঠাটি খুঁজছেন তা মুছে ফেলা হয়েছে বা এর নাম পরিবর্তন করা হয়েছে।',
     '404.back': 'হোম পেজে ফিরে যান',
+
+    // Admin Dashboard
+    'admin.header.title': 'ম্যানেজমেন্ট কনসোল',
+    'admin.header.role': 'সুপার এডমিন',
+    'admin.header.logout': 'লগআউট',
+    'admin.menu.dashboard': 'ড্যাশবোর্ড',
+    'admin.menu.home': 'হোম পৃষ্ঠা',
+    'admin.menu.about': 'আমাদের সম্পর্কে',
+    'admin.menu.constitution': 'গঠনতন্ত্র',
+    'admin.menu.activities': 'কার্যক্রমসমূহ',
+    'admin.menu.advisers': 'উপদেষ্টা পরিষদ',
+    'admin.menu.gallery': 'গ্যালারী',
+    'admin.menu.blog': 'ব্লগ পোস্ট',
+    'admin.menu.contacts': 'যোগাযোগসমূহ',
+    'admin.menu.settings': 'সেটিংস',
+    'admin.menu.view_site': 'ওয়েবসাইট দেখুন',
   },
   en: {
     // General
@@ -182,6 +198,22 @@ const translations: Record<Language, Record<string, string>> = {
     '404.title': '404 - Page Not Found',
     '404.subtitle': 'Sorry, the page you are looking for might have been removed or had its name changed.',
     '404.back': 'Back to Home',
+
+    // Admin Dashboard
+    'admin.header.title': 'Management Console',
+    'admin.header.role': 'Super Admin',
+    'admin.header.logout': 'Logout',
+    'admin.menu.dashboard': 'Dashboard',
+    'admin.menu.home': 'Home Page',
+    'admin.menu.about': 'About Us',
+    'admin.menu.constitution': 'Constitution',
+    'admin.menu.activities': 'Activities',
+    'admin.menu.advisers': 'Advisers',
+    'admin.menu.gallery': 'Gallery',
+    'admin.menu.blog': 'Blog',
+    'admin.menu.contacts': 'Contacts',
+    'admin.menu.settings': 'Settings',
+    'admin.menu.view_site': 'View Website',
   }
 }
 

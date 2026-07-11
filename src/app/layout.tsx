@@ -2,8 +2,7 @@ import type { Metadata } from 'next'
 import { Inter, Noto_Sans_Bengali } from 'next/font/google'
 import './globals.css'
 import { LanguageProvider } from '@/components/context/LanguageContext'
-import Navbar from '@/components/layout/Navbar'
-import Footer from '@/components/layout/Footer'
+import ConditionalLayout from '@/components/layout/ConditionalLayout'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -36,11 +35,7 @@ export default function RootLayout({
     <html lang="bn" className={`${inter.variable} ${notoSansBengali.variable}`}>
       <body className="antialiased">
         <LanguageProvider>
-          <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-            <Navbar />
-            <main style={{ flex: 1 }}>{children}</main>
-            <Footer />
-          </div>
+          <ConditionalLayout>{children}</ConditionalLayout>
         </LanguageProvider>
       </body>
     </html>

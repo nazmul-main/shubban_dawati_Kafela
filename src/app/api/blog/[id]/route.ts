@@ -4,10 +4,10 @@ import prisma from '@/lib/db'
 // DELETE /api/blog/[id] — Delete blog post
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const id = params.id
+    const { id } = await params
 
     if (!id) {
       return NextResponse.json({ error: 'No ID provided' }, { status: 400 })
