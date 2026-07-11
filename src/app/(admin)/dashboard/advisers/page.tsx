@@ -107,6 +107,11 @@ export default function AdvisersAdminPage() {
     const file = e.target.files?.[0]
     if (!file) return
 
+    if (file.size > 4.5 * 1024 * 1024) {
+      setUploadError('ফাইল সাইজ অনেক বড়! সর্বোচ্চ 4.5MB সাইজের ছবি আপলোড করা যাবে।')
+      return
+    }
+
     setUploadError(null)
     // Show local preview immediately
     const localUrl = URL.createObjectURL(file)
