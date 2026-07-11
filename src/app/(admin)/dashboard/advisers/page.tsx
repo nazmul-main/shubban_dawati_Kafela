@@ -243,8 +243,20 @@ export default function AdvisersAdminPage() {
               advisers.map((adv) => (
                 <tr key={adv.id}>
                   <td>
-                    <div><strong>{adv.nameBn}</strong></div>
-                    <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{adv.nameEn}</div>
+                    <div className={styles.nameCol}>
+                      {adv.image ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={adv.image} alt={adv.nameBn} className={styles.tableImage} />
+                      ) : (
+                        <div className={styles.tableAvatarPlaceholder}>
+                          {adv.nameBn.charAt(0)}
+                        </div>
+                      )}
+                      <div>
+                        <div><strong>{adv.nameBn}</strong></div>
+                        <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{adv.nameEn}</div>
+                      </div>
+                    </div>
                   </td>
                   <td>
                     <div>{adv.designationBn}</div>

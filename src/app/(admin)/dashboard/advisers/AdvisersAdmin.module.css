@@ -346,3 +346,30 @@
 .spinning {
   animation: spin 1s linear infinite;
 }
+
+.tableImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border-color);
+}
+
+.tableAvatarPlaceholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--border-color);
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.nameCol {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}

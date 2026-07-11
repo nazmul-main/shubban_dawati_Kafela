@@ -180,12 +180,17 @@ export default function AboutPage() {
                         <span>{language === 'bn' ? adv.nameBn.charAt(0) : adv.nameEn.charAt(0)}</span>
                       </div>
                     )}
-                    <h3 className="heading-sm" style={{ margin: '1rem 0 0.25rem', fontSize: '1.1rem' }}>
-                      {language === 'bn' ? adv.nameBn : adv.nameEn}
-                    </h3>
-                    <p style={{ color: 'var(--accent)', fontWeight: 600, fontSize: '0.9rem' }}>
+                    <p style={{ color: 'var(--accent)', fontWeight: 600, fontSize: '0.9rem', margin: '1rem 0 0.15rem' }}>
                       {language === 'bn' ? adv.designationBn : adv.designationEn}
                     </p>
+                    <h3 className="heading-sm" style={{ margin: '0 0 0.15rem', fontSize: '1.05rem', fontWeight: 'bold' }}>
+                      {language === 'bn' ? adv.nameBn : adv.nameEn}
+                    </h3>
+                    {(language === 'bn' ? adv.titleBn : adv.titleEn) && (
+                      <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+                        {language === 'bn' ? adv.titleBn : adv.titleEn}
+                      </p>
+                    )}
                   </div>
                 ))
               )}

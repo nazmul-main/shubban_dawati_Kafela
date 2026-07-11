@@ -14,9 +14,8 @@ export default function Navbar() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light')
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark'
-    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-    const activeTheme = savedTheme || systemTheme
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
+    const activeTheme = savedTheme || 'light'
     setTheme(activeTheme)
     document.documentElement.setAttribute('data-theme', activeTheme)
   }, [])
