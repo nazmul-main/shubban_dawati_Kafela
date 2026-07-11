@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useLanguage } from '../context/LanguageContext'
 import { MapPin, Phone, Mail } from 'lucide-react'
 import styles from './Footer.module.css'
@@ -30,7 +31,13 @@ export default function Footer() {
           {/* Brand Info */}
           <div className={styles.brandInfo}>
             <Link href="/" className={styles.logo}>
-              <div className={styles.logoIcon}></div>
+              <Image
+                src="/logo.png"
+                alt="শুব্বান দাওয়াতি কাফেলা লোগো"
+                width={56}
+                height={56}
+                className={styles.logoImg}
+              />
               <span className={styles.logoText}>{t('site.title')}</span>
             </Link>
             <p className={styles.description}>{t('site.footer.desc')}</p>

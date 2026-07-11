@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useLanguage } from '../context/LanguageContext'
 import { Menu, X, Globe, Moon, Sun } from 'lucide-react'
@@ -52,10 +53,14 @@ export default function Navbar() {
     <header className={styles.header}>
       <div className={`${styles.container} container`}>
         <Link href="/" className={styles.logo}>
-          <div className={styles.logoIcon}></div>
-          <div className={styles.logoText}>
-            <span className={styles.logoMain}>{t('site.title')}</span>
-          </div>
+          <Image
+            src="/logo.png"
+            alt="শুব্বান দাওয়াতি কাফেলা লোগো"
+            width={48}
+            height={48}
+            className={styles.logoImg}
+            priority
+          />
         </Link>
 
         {/* Desktop Navigation */}
