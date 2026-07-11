@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { Plus, Edit2, Trash2, X, Save } from 'lucide-react'
+import { TableRowSkeleton } from '@/components/ui/Skeleton'
 import styles from './ActivitiesAdmin.module.css'
 
 interface Activity {
@@ -123,21 +124,33 @@ export default function ActivitiesAdminPage() {
         </button>
       </div>
 
-      {loading ? (
-        <p>Loading activities...</p>
-      ) : (
-        <div className={styles.tableContainer}>
-          <table className={styles.table}>
-            <thead>
+      <div className={styles.tableContainer}>
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th>Title (Bn)</th>
+              <th>Title (En)</th>
+              <th>Icon</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {loading ? (
+              Array.from({ length: 5 }).map((_, i) => (
+                <tr key={`skel-${i}`}>
+                  <td colSpan={4} style={{ padding: 0 }}>
+                    <TableRowSkeleton columns={4} />
+                  </td>
+                </tr>
+              ))
+            ) : activities.length === 0 ? (
               <tr>
-                <th>Title (Bn)</th>
-                <th>Title (En)</th>
-                <th>Icon</th>
-                <th>Actions</th>
+                <td colSpan={4} className="text-center" style={{ padding: '2rem' }}>
+                  No activities found.
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {activities.map((act) => (
+            ) : (
+              activities.map((act) => (
                 <tr key={act.id}>
                   <td>{act.titleBn}</td>
                   <td>{act.titleEn}</td>
@@ -153,11 +166,11 @@ export default function ActivitiesAdminPage() {
                     </div>
                   </td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
 
       {isModalOpen && (
         <div className={styles.modalOverlay}>

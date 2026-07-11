@@ -7,6 +7,7 @@ import { Heart, Users, BookOpen, Calendar, ArrowRight, Award, X } from 'lucide-r
 import * as LucideIcons from 'lucide-react'
 import styles from './Home.module.css'
 import activitiesStyles from './activities/Activities.module.css'
+import { ActivityCardSkeleton, AdviserCardSkeleton } from '@/components/ui/Skeleton'
 
 interface ActivityProps {
   id: string
@@ -41,6 +42,8 @@ export default function HomePage() {
   const [activities, setActivities] = useState<ActivityProps[]>([])
   const [advisers, setAdvisers] = useState<AdviserProps[]>([])
   const [selectedActivity, setSelectedActivity] = useState<ActivityProps | null>(null)
+  const [loadingActivities, setLoadingActivities] = useState(true)
+  const [loadingAdvisers, setLoadingAdvisers] = useState(true)
 
   useEffect(() => {
     const fetchActivities = async () => {
@@ -53,6 +56,8 @@ export default function HomePage() {
         }
       } catch (err) {
         console.error('Failed to fetch activities for home page', err)
+      } finally {
+        setLoadingActivities(false)
       }
     }
 
@@ -71,6 +76,8 @@ export default function HomePage() {
         }
       } catch (err) {
         console.error('Failed to fetch advisers for home page', err)
+      } finally {
+        setLoadingAdvisers(false)
       }
     }
 
@@ -158,10 +165,13 @@ export default function HomePage() {
             {t('nav.home') === 'হোম' ? 'আমাদের মূল কার্যক্রম' : 'Our Core Activities'}
           </h2>
           <div className={activitiesStyles.grid}>
-            {activities.map((act) => {
-              const desc = language === 'bn' ? act.descriptionBn : act.descriptionEn
-              const title = language === 'bn' ? act.titleBn : act.titleEn
-              const isLong = desc.length > 250
+            {loadingActivities ? (
+              Array.from({ length: 3 }).map((_, i) => <ActivityCardSkeleton key={`act-skel-${i}`} />)
+            ) : activities.length > 0 ? (
+              activities.map((act) => {
+                const desc = language === 'bn' ? act.descriptionBn : act.descriptionEn
+                const title = language === 'bn' ? act.titleBn : act.titleEn
+                const isLong = desc.length > 250
 
               return (
                 <div 
@@ -189,7 +199,10 @@ export default function HomePage() {
                   </div>
                 </div>
               )
-            })}
+            })
+          ) : (
+            <p className="text-center" style={{ gridColumn: '1 / -1' }}>No activities found.</p>
+          )}
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}>
@@ -216,7 +229,7 @@ export default function HomePage() {
       </section>
 
       {/* Advisory Council Section */}
-      {advisers.length > 0 && (
+      {(loadingAdvisers || advisers.length > 0) && (
         <section className={`${styles.adviserSection} section`}>
           <div className="container">
             <h2 className="heading-lg text-center" style={{ marginBottom: '3rem' }}>
@@ -224,28 +237,32 @@ export default function HomePage() {
             </h2>
 
             <div className={styles.teamGrid}>
-              {advisers.slice(0, 3).map((adv) => (
-                <div key={adv.id} className={styles.teamCard}>
-                  {adv.image ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img 
-                      src={adv.image} 
-                      alt={language === 'bn' ? adv.nameBn : adv.nameEn} 
-                      className={styles.adviserImage}
-                    />
-                  ) : (
-                    <div className={styles.avatarPlaceholder}>
-                      <span>{language === 'bn' ? adv.nameBn.charAt(0) : adv.nameEn.charAt(0)}</span>
-                    </div>
-                  )}
-                  <h3 className="heading-sm" style={{ margin: '1rem 0 0.25rem', fontSize: '1.1rem' }}>
-                    {language === 'bn' ? adv.nameBn : adv.nameEn}
-                  </h3>
-                  <p style={{ color: 'var(--accent)', fontWeight: 600, fontSize: '0.9rem' }}>
-                    {language === 'bn' ? adv.designationBn : adv.designationEn}
-                  </p>
-                </div>
-              ))}
+              {loadingAdvisers ? (
+                Array.from({ length: 3 }).map((_, i) => <AdviserCardSkeleton key={`adv-skel-${i}`} />)
+              ) : (
+                advisers.slice(0, 3).map((adv) => (
+                  <div key={adv.id} className={styles.teamCard}>
+                    {adv.image ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img 
+                        src={adv.image} 
+                        alt={language === 'bn' ? adv.nameBn : adv.nameEn} 
+                        className={styles.adviserImage}
+                      />
+                    ) : (
+                      <div className={styles.avatarPlaceholder}>
+                        <span>{language === 'bn' ? adv.nameBn.charAt(0) : adv.nameEn.charAt(0)}</span>
+                      </div>
+                    )}
+                    <h3 className="heading-sm" style={{ margin: '1rem 0 0.25rem', fontSize: '1.1rem' }}>
+                      {language === 'bn' ? adv.nameBn : adv.nameEn}
+                    </h3>
+                    <p style={{ color: 'var(--accent)', fontWeight: 600, fontSize: '0.9rem' }}>
+                      {language === 'bn' ? adv.designationBn : adv.designationEn}
+                    </p>
+                  </div>
+                ))
+              )}
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}>

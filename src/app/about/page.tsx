@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { useLanguage } from '@/components/context/LanguageContext'
 import { CheckCircle, ShieldAlert, Award, Landmark } from 'lucide-react'
+import { AdviserCardSkeleton } from '@/components/ui/Skeleton'
 import styles from './About.module.css'
 
 interface AdviserProps {
@@ -21,6 +22,7 @@ interface AdviserProps {
 export default function AboutPage() {
   const { t, language } = useLanguage()
   const [advisers, setAdvisers] = useState<AdviserProps[]>([])
+  const [loadingAdvisers, setLoadingAdvisers] = useState(true)
 
   useEffect(() => {
     const fetchAdvisers = async () => {
@@ -35,6 +37,8 @@ export default function AboutPage() {
         }
       } catch (err) {
         console.error('Failed to fetch advisers', err)
+      } finally {
+        setLoadingAdvisers(false)
       }
     }
     fetchAdvisers()
@@ -152,35 +156,39 @@ export default function AboutPage() {
       </section>
 
       {/* Advisory Board Section */}
-      {advisers.length > 0 && (
+      {(loadingAdvisers || advisers.length > 0) && (
         <section className={`${styles.teamSection} section`}>
           <div className="container">
             <h2 className="heading-lg text-center" style={{ marginBottom: '3rem' }}>
               {language === 'bn' ? 'উপদেষ্টা পরিষদ' : 'Advisory Board'}
             </h2>
             <div className={styles.teamGrid}>
-              {advisers.map((adv) => (
-                <div key={adv.id} className={styles.teamCard}>
-                  {adv.image ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img 
-                      src={adv.image} 
-                      alt={language === 'bn' ? adv.nameBn : adv.nameEn} 
-                      className={styles.adviserImage}
-                    />
-                  ) : (
-                    <div className={styles.avatarPlaceholder}>
-                      <span>{language === 'bn' ? adv.nameBn.charAt(0) : adv.nameEn.charAt(0)}</span>
-                    </div>
-                  )}
-                  <h3 className="heading-sm" style={{ margin: '1rem 0 0.25rem', fontSize: '1.1rem' }}>
-                    {language === 'bn' ? adv.nameBn : adv.nameEn}
-                  </h3>
-                  <p style={{ color: 'var(--accent)', fontWeight: 600, fontSize: '0.9rem' }}>
-                    {language === 'bn' ? adv.designationBn : adv.designationEn}
-                  </p>
-                </div>
-              ))}
+              {loadingAdvisers ? (
+                Array.from({ length: 6 }).map((_, i) => <AdviserCardSkeleton key={`adv-skel-${i}`} />)
+              ) : (
+                advisers.map((adv) => (
+                  <div key={adv.id} className={styles.teamCard}>
+                    {adv.image ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img 
+                        src={adv.image} 
+                        alt={language === 'bn' ? adv.nameBn : adv.nameEn} 
+                        className={styles.adviserImage}
+                      />
+                    ) : (
+                      <div className={styles.avatarPlaceholder}>
+                        <span>{language === 'bn' ? adv.nameBn.charAt(0) : adv.nameEn.charAt(0)}</span>
+                      </div>
+                    )}
+                    <h3 className="heading-sm" style={{ margin: '1rem 0 0.25rem', fontSize: '1.1rem' }}>
+                      {language === 'bn' ? adv.nameBn : adv.nameEn}
+                    </h3>
+                    <p style={{ color: 'var(--accent)', fontWeight: 600, fontSize: '0.9rem' }}>
+                      {language === 'bn' ? adv.designationBn : adv.designationEn}
+                    </p>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </section>

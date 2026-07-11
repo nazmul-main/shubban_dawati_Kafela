@@ -1,0 +1,114 @@
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--border-color) 25%,
+    var(--bg-light) 50%,
+    var(--border-color) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+[data-theme="dark"] .skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--border-color) 25%,
+    var(--bg-card) 50%,
+    var(--border-color) 75%
+  );
+  background-size: 200% 100%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.cardSkeleton {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  height: 100%;
+  gap: 16px;
+}
+
+.avatarSkeleton {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+.titleSkeleton {
+  height: 24px;
+  width: 70%;
+  margin: 0 auto;
+  border-radius: 4px;
+}
+
+.textSkeleton {
+  height: 16px;
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.textSkeletonShort {
+  height: 16px;
+  width: 50%;
+  margin: 0 auto;
+  border-radius: 4px;
+}
+
+/* Specific for Adviser Card */
+.adviserCardSkeleton {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Specific for Activity Card */
+.activityCardSkeleton {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.activityIconSkeleton {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  margin-bottom: 20px;
+}
+
+/* Table Skeleton */
+.tableRowSkeleton {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.tableCellSkeleton {
+  height: 20px;
+  border-radius: 4px;
+  flex: 1;
+}

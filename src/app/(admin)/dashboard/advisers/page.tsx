@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import { Plus, Edit2, Trash2, X, Save, Upload, Loader2 } from 'lucide-react'
+import { TableRowSkeleton } from '@/components/ui/Skeleton'
 import styles from './AdvisersAdmin.module.css'
 
 interface Adviser {
@@ -212,22 +213,34 @@ export default function AdvisersAdminPage() {
         </button>
       </div>
 
-      {loading ? (
-        <p>Loading advisers...</p>
-      ) : (
-        <div className={styles.tableContainer}>
-          <table className={styles.table}>
-            <thead>
+      <div className={styles.tableContainer}>
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th>Name (Bn/En)</th>
+              <th>Position (Bn/En)</th>
+              <th>Title/Degree (Bn/En)</th>
+              <th>Order (ক্রম)</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {loading ? (
+              Array.from({ length: 5 }).map((_, i) => (
+                <tr key={`skel-${i}`}>
+                  <td colSpan={5} style={{ padding: 0 }}>
+                    <TableRowSkeleton columns={5} />
+                  </td>
+                </tr>
+              ))
+            ) : advisers.length === 0 ? (
               <tr>
-                <th>Name (Bn/En)</th>
-                <th>Position (Bn/En)</th>
-                <th>Title/Degree (Bn/En)</th>
-                <th>Order (ক্রম)</th>
-                <th>Actions</th>
+                <td colSpan={5} className="text-center" style={{ padding: '2rem' }}>
+                  No advisers found.
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {advisers.map((adv) => (
+            ) : (
+              advisers.map((adv) => (
                 <tr key={adv.id}>
                   <td>
                     <div><strong>{adv.nameBn}</strong></div>
@@ -253,11 +266,11 @@ export default function AdvisersAdminPage() {
                     </div>
                   </td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
 
       {isModalOpen && (
         <div className={styles.modalOverlay}>
